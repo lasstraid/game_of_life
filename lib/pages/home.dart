@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,12 +17,16 @@ class _HomePageState extends State<HomePage> {
 
   late List<List<bool>> grid;
   Timer? timer;
+  Random random = Random();
   bool isRunning = false;
 
   @override
   void initState() {
     super.initState();
-    grid = List.generate(rows, (_) => List.generate(cols, (_) => false));
+    grid = List.generate(
+      rows,
+      (_) => List.generate(cols, (_) => random.nextBool()),
+    );
   }
 
   void toggleCell(int r, int c) {
@@ -87,7 +92,7 @@ class _HomePageState extends State<HomePage> {
   void clear() {
     stop();
     setState(() {
-      grid = List.generate(rows, (_) => List.generate(cols, (_) => false));
+      grid = List.generate(rows, (_) => List.generate(cols, (_) => random.nextBool()));
     });
   }
 
@@ -150,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: isRunning ? stop : null,
                 child: const Text('pausar'),
               ),
-              ElevatedButton(onPressed: clear, child: const Text('pausar'),)
+              ElevatedButton(onPressed: clear, child: const Text('reiniciar')),
             ],
           ),
         ],
